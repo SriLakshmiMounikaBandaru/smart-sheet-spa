@@ -11,12 +11,20 @@ registerAllModules();
 import { HyperFormula, FunctionPlugin, FunctionArgumentType } from 'hyperformula';
 
 // Components
-import Toolbar from './components/Toolbar';
+// REMOVED: import Toolbar from './components/Toolbar';  <-- We replaced this
 import FormulaBar from './components/FormulaBar';
+import Ribbon from './components/Ribbon'; // <--- NEW IMPORT
 
+<<<<<<< HEAD
+// ====================================================================
+// 📊 EXISTING PLUGIN LOGIC (UNCHANGED)
+// ====================================================================
+=======
 //  STEP 1: DEFINE THE RATING PLUGIN LOGIC 
 
+>>>>>>> 3abc85f096ffd6855799cf8bdc1037b518d3bbd9
 
+// 1. RATING PLUGIN
 class RatingPlugin extends FunctionPlugin {
   rating(ast, state) {
     return this.runFunction(
@@ -24,63 +32,34 @@ class RatingPlugin extends FunctionPlugin {
       state,
       this.metadata('RATING'),
       (ratingValue, maxStars = 5) => {
-        // Convert to number and validate
         const rating = Number(ratingValue);
         const max = Number(maxStars);
-        
-        // Validate input
-        if (isNaN(rating) || isNaN(max)) {
-          return "Invalid input";
-        }
-        
-        if (rating < 0 || max <= 0) {
-          return "Invalid rating";
-        }
-        
-        // Clamp rating between 0 and max
+        if (isNaN(rating) || isNaN(max)) return "Invalid input";
+        if (rating < 0 || max <= 0) return "Invalid rating";
         const clampedRating = Math.max(0, Math.min(rating, max));
-        
-        // Calculate full and partial stars
         const fullStars = Math.floor(clampedRating);
         const hasHalfStar = clampedRating - fullStars >= 0.5;
-        
-        // Unicode star characters
         const starFull = '★';
         const starHalf = '⯨'; 
         const starEmpty = '☆';
-        
-        // Build star string
         let stars = '';
-        
-        // Add full stars
-        for (let i = 0; i < fullStars; i++) {
-          stars += starFull;
-        }
-        
-        // Add half star if needed
-        if (hasHalfStar) {
-          stars += starHalf;
-        }
-        
-        // Add empty stars
+        for (let i = 0; i < fullStars; i++) stars += starFull;
+        if (hasHalfStar) stars += starHalf;
         const totalStarsSoFar = fullStars + (hasHalfStar ? 1 : 0);
-        for (let i = totalStarsSoFar; i < max; i++) {
-          stars += starEmpty;
-        }
-        
-        // Optional: Add numeric rating in parentheses
-        // return `${stars} (${clampedRating.toFixed(1)})`;
+        for (let i = totalStarsSoFar; i < max; i++) stars += starEmpty;
         return stars;
       }
     );
   }
 }
 
+<<<<<<< HEAD
+=======
 // STEP 2: CONFIGURE RATING PROPERTIES 
 
 
+>>>>>>> 3abc85f096ffd6855799cf8bdc1037b518d3bbd9
 RatingPlugin.pluginName = 'RatingPlugin';
-
 RatingPlugin.implementedFunctions = {
   RATING: {
     method: 'rating',
@@ -90,7 +69,11 @@ RatingPlugin.implementedFunctions = {
     ],
   }
 };
+RatingPlugin.translations = { enGB: { RATING: 'RATING' } };
 
+<<<<<<< HEAD
+// 2. FULLNAME PLUGIN
+=======
 RatingPlugin.translations = {
   enGB: {
     RATING: 'RATING',
@@ -101,6 +84,7 @@ RatingPlugin.translations = {
 //  STEP 1: DEFINE THE UPDATED FULLNAME PLUGIN LOGIC 
 
 
+>>>>>>> 3abc85f096ffd6855799cf8bdc1037b518d3bbd9
 class FullNamePlugin extends FunctionPlugin {
   fullname(ast, state) {
     return this.runFunction(
@@ -108,35 +92,30 @@ class FullNamePlugin extends FunctionPlugin {
       state,
       this.metadata('FULLNAME'),
       (firstName, lastName) => {
-        // CAPITALIZATION ADDED HERE - First letter uppercase, rest lowercase
         const f = firstName || '';
         const l = lastName || '';
-        
-        // Function to capitalize a name
         const capitalizeName = (name) => {
           if (!name || typeof name !== 'string') return '';
           const trimmed = name.trim();
           if (trimmed.length === 0) return '';
           return trimmed.charAt(0).toUpperCase() + trimmed.slice(1).toLowerCase();
         };
-        
-        // Capitalize both names
         const capitalizedFirst = capitalizeName(f);
         const capitalizedLast = capitalizeName(l);
-        
-        // Return the formatted full name
         return `${capitalizedFirst} ${capitalizedLast}`.trim();
       }
     );
   }
 }
 
+<<<<<<< HEAD
+=======
 
 //  STEP 2: CONFIGURE FULLNAME PROPERTIES 
 
 
+>>>>>>> 3abc85f096ffd6855799cf8bdc1037b518d3bbd9
 FullNamePlugin.pluginName = 'FullNamePlugin';
-
 FullNamePlugin.implementedFunctions = {
   FULLNAME: {
     method: 'fullname',
@@ -146,13 +125,49 @@ FullNamePlugin.implementedFunctions = {
     ],
   }
 };
+FullNamePlugin.translations = { enGB: { FULLNAME: 'FULLNAME' } };
 
-FullNamePlugin.translations = {
-  enGB: {
-    FULLNAME: 'FULLNAME',
-  },
+// 3. AGE PLUGIN
+class AgePlugin extends FunctionPlugin {
+  age(ast, state) {
+    return this.runFunction(
+      ast.args,
+      state,
+      this.metadata('AGE'),
+      (birthDate, referenceDate = new Date()) => {
+        try {
+          const birth = new Date(birthDate);
+          const ref = new Date(referenceDate);
+          if (isNaN(birth.getTime()) || isNaN(ref.getTime())) return "Invalid date";
+          let age = ref.getFullYear() - birth.getFullYear();
+          const monthDiff = ref.getMonth() - birth.getMonth();
+          if (monthDiff < 0 || (monthDiff === 0 && ref.getDate() < birth.getDate())) {
+            age--;
+          }
+          return age;
+        } catch (error) {
+          return "Invalid input";
+        }
+      }
+    );
+  }
+}
+
+AgePlugin.pluginName = 'AgePlugin';
+AgePlugin.implementedFunctions = {
+  AGE: {
+    method: 'age',
+    parameters: [
+      { argumentType: FunctionArgumentType.STRING },
+      { argumentType: FunctionArgumentType.STRING, optionalArg: true }
+    ],
+  }
 };
+AgePlugin.translations = { enGB: { AGE: 'AGE' } };
 
+<<<<<<< HEAD
+// MANUAL REGISTRATION
+=======
 //  STEP 1: DEFINE THE AGE PLUGIN LOGIC 
 class AgePlugin extends FunctionPlugin {
   age(ast, state) {
@@ -215,23 +230,34 @@ AgePlugin.translations = {
 // STEP 3: MANUAL REGISTRATION (FOR VERSION 2.6.0) 
 
 
+>>>>>>> 3abc85f096ffd6855799cf8bdc1037b518d3bbd9
 HyperFormula.registerFunctionPlugin(RatingPlugin, RatingPlugin.translations);
 HyperFormula.registerFunctionPlugin(FullNamePlugin, FullNamePlugin.translations);
 HyperFormula.registerFunctionPlugin(AgePlugin, AgePlugin.translations);
 
+<<<<<<< HEAD
+console.log("✅ All Plugins Registered Manually");
+=======
 console.log("✅ All Plugins Registered Manually for v2.6.0");
 
 
 //  STEP 4: BUILD ENGINE 
 
+>>>>>>> 3abc85f096ffd6855799cf8bdc1037b518d3bbd9
 
+// BUILD ENGINE
 const hfInstance = HyperFormula.buildEmpty({
   licenseKey: 'gpl-v3',
   language: 'enGB',
 });
 
+<<<<<<< HEAD
+// ====================================================================
+// 🖥️ MAIN COMPONENT
+=======
 console.log("✅ Engine Started with RATING, FULLNAME & AGE functions!");
 
+>>>>>>> 3abc85f096ffd6855799cf8bdc1037b518d3bbd9
 // ====================================================================
 
 const Spreadsheet = () => {
@@ -276,31 +302,31 @@ const Spreadsheet = () => {
     .rating-cell {
       display: flex;
       align-items: center;
+      justify-content: center;
     }
   `;
 
   return (
     <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', background: '#fff' }}>
       
-      {/* Add custom styles for stars */}
+      {/* CSS Injection for Stars */}
       <style>{starStyle}</style>
       
-      {/* Header */}
-      <div className="excel-header" style={{
-          backgroundColor: '#107C41', color: 'white', padding: '0 15px', height: '40px',
-          display: 'flex', alignItems: 'center', gap: '20px', fontSize: '14px'
+      {/* 1. NEW TITLE BAR (Green Strip) */}
+      <div style={{ 
+          backgroundColor: '#107C41', color: 'white', padding: '0 15px', height: '30px', 
+          display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px' 
       }}>
-        <div style={{display:'flex', alignItems:'center', gap:'5px'}}>
-          <Grid size={18} /> <b>Excel Clone</b>
-        </div>
-        <div className="file-menu" style={{display:'flex', gap:'15px', cursor:'pointer', fontSize:'13px'}}>
-          <span>File</span><span>Home</span><span>Insert</span><span>Layout</span><span>Formulas</span>
-        </div>
+          <span>Book1 - Excel Clone</span>
       </div>
 
-      <Toolbar onBoldClick={handleBold} />
+      {/* 2. NEW RIBBON (Replaces Old Header & Toolbar) */}
+      <Ribbon onBoldClick={handleBold} />
+
+      {/* 3. Formula Bar (Unchanged) */}
       <FormulaBar />
 
+      {/* 4. Grid Area (Unchanged Logic) */}
       <div style={{ flex: 1, overflow: 'hidden', position: 'relative' }}>
         <HotTable
           ref={hotRef}
@@ -322,15 +348,14 @@ const Spreadsheet = () => {
           autoWrapCol={true}
           outsideClickDeselects={false}
           
-          // Custom renderer for star ratings
+          // Custom renderer for star ratings (Preserved)
           cells={(row, col) => {
             const cellMeta = {};
             const hot = hotRef.current?.hotInstance;
             if (hot) {
               const cellValue = hot.getDataAtCell(row, col);
-              // Check if cell contains star characters
               if (typeof cellValue === 'string' && 
-                  (cellValue.includes('★') || cellValue.includes('☆') || cellValue.includes('⭐'))) {
+                 (cellValue.includes('★') || cellValue.includes('☆') || cellValue.includes('⭐'))) {
                 cellMeta.className = 'star-rating';
                 cellMeta.renderer = function(instance, td, row, col, prop, value) {
                   td.innerHTML = `<div class="rating-cell">${value}</div>`;
@@ -344,6 +369,7 @@ const Spreadsheet = () => {
         />
       </div>
 
+      {/* 5. Footer (Unchanged) */}
       <div style={{ 
         background: '#f8f9fa', 
         padding: '0 10px', 
@@ -370,7 +396,11 @@ const Spreadsheet = () => {
         </div>
         
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+<<<<<<< HEAD
+          <span>Functions: <b>FULLNAME</b> | <b>RATING</b> | <b>AGE</b></span>
+=======
           <span>Functions: <b>FULLNAME(first, last)</b> | <b>RATING(value, [max=5])</b> | <b>AGE(birthdate, [refdate])</b></span>
+>>>>>>> 3abc85f096ffd6855799cf8bdc1037b518d3bbd9
         </div>
       </div>
     </div>
