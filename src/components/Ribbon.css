@@ -1,0 +1,134 @@
+/* Ribbon Container */
+.ribbon-container {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid #d1d1d1;
+  background-color: #f3f2f1;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Tabs Row (Green) */
+.ribbon-tabs {
+  display: flex;
+  background-color: #107C41; /* Excel Green */
+  padding-top: 5px;
+  padding-left: 10px;
+  gap: 2px;
+}
+
+.file-tab {
+  background-color: #107C41;
+  color: white;
+  padding: 8px 20px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  border-radius: 4px 4px 0 0;
+}
+.file-tab:hover { background-color: #0b5c30; }
+
+.tab-item {
+  color: white;
+  padding: 8px 18px;
+  font-size: 13px;
+  cursor: pointer;
+  border-radius: 4px 4px 0 0;
+  transition: all 0.2s;
+}
+
+.tab-item:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.tab-item.active {
+  background-color: #f3f2f1;
+  color: #107C41;
+  font-weight: 600;
+  box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+}
+
+/* Ribbon Body (Gray Area) */
+.ribbon-body {
+  height: 90px;
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+  background-color: #f3f2f1;
+}
+
+.ribbon-group-container {
+  display: flex;
+  height: 100%;
+  gap: 10px;
+}
+
+.ribbon-group {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 0 10px;
+  position: relative;
+}
+
+.divider {
+  width: 1px;
+  background-color: #d1d1d1;
+  height: 70px;
+  margin: 0 5px;
+}
+
+/* Button Styles */
+.ribbon-btn-large {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 3px;
+  font-size: 11px;
+  gap: 4px;
+}
+.ribbon-btn-large:hover { background-color: #e1dfdd; }
+
+.ribbon-column {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ribbon-btn-small {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  padding: 2px 5px;
+  cursor: pointer;
+}
+.ribbon-btn-small:hover { background-color: #e1dfdd; }
+
+/* Font Controls */
+.ribbon-row { display: flex; gap: 5px; margin-bottom: 5px; }
+.font-select { width: 100px; font-size: 12px; padding: 2px; }
+.size-select { width: 40px; font-size: 12px; padding: 2px; }
+
+.icon-btn {
+  border: none;
+  background: transparent;
+  padding: 4px;
+  cursor: pointer;
+  border-radius: 2px;
+  color: #333;
+}
+.icon-btn:hover { background-color: #c7c7c7; }
+
+/* Labels at bottom of groups */
+.group-label {
+  position: absolute;
+  bottom: -4px;
+  width: 100%;
+  text-align: center;
+  font-size: 10px;
+  color: #666;
+  left: 0;
+}
