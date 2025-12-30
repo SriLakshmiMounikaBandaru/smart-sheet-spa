@@ -15,14 +15,9 @@ import { HyperFormula, FunctionPlugin, FunctionArgumentType } from 'hyperformula
 import FormulaBar from './components/FormulaBar';
 import Ribbon from './components/Ribbon'; // <--- NEW IMPORT
 
-<<<<<<< HEAD
 // ====================================================================
 // 📊 EXISTING PLUGIN LOGIC (UNCHANGED)
 // ====================================================================
-=======
-//  STEP 1: DEFINE THE RATING PLUGIN LOGIC 
-
->>>>>>> 3abc85f096ffd6855799cf8bdc1037b518d3bbd9
 
 // 1. RATING PLUGIN
 class RatingPlugin extends FunctionPlugin {
@@ -53,12 +48,6 @@ class RatingPlugin extends FunctionPlugin {
   }
 }
 
-<<<<<<< HEAD
-=======
-// STEP 2: CONFIGURE RATING PROPERTIES 
-
-
->>>>>>> 3abc85f096ffd6855799cf8bdc1037b518d3bbd9
 RatingPlugin.pluginName = 'RatingPlugin';
 RatingPlugin.implementedFunctions = {
   RATING: {
@@ -71,20 +60,7 @@ RatingPlugin.implementedFunctions = {
 };
 RatingPlugin.translations = { enGB: { RATING: 'RATING' } };
 
-<<<<<<< HEAD
 // 2. FULLNAME PLUGIN
-=======
-RatingPlugin.translations = {
-  enGB: {
-    RATING: 'RATING',
-  },
-};
-
-// 
-//  STEP 1: DEFINE THE UPDATED FULLNAME PLUGIN LOGIC 
-
-
->>>>>>> 3abc85f096ffd6855799cf8bdc1037b518d3bbd9
 class FullNamePlugin extends FunctionPlugin {
   fullname(ast, state) {
     return this.runFunction(
@@ -108,13 +84,6 @@ class FullNamePlugin extends FunctionPlugin {
   }
 }
 
-<<<<<<< HEAD
-=======
-
-//  STEP 2: CONFIGURE FULLNAME PROPERTIES 
-
-
->>>>>>> 3abc85f096ffd6855799cf8bdc1037b518d3bbd9
 FullNamePlugin.pluginName = 'FullNamePlugin';
 FullNamePlugin.implementedFunctions = {
   FULLNAME: {
@@ -165,85 +134,12 @@ AgePlugin.implementedFunctions = {
 };
 AgePlugin.translations = { enGB: { AGE: 'AGE' } };
 
-<<<<<<< HEAD
 // MANUAL REGISTRATION
-=======
-//  STEP 1: DEFINE THE AGE PLUGIN LOGIC 
-class AgePlugin extends FunctionPlugin {
-  age(ast, state) {
-    return this.runFunction(
-      ast.args,
-      state,
-      this.metadata('AGE'),
-      (birthDate, referenceDate = new Date()) => {
-        try {
-          // Parse dates
-          const birth = new Date(birthDate);
-          const ref = new Date(referenceDate);
-          
-          // Validate dates
-          if (isNaN(birth.getTime()) || isNaN(ref.getTime())) {
-            return "Invalid date";
-          }
-          
-          // Calculate age
-          let age = ref.getFullYear() - birth.getFullYear();
-          const monthDiff = ref.getMonth() - birth.getMonth();
-          
-          // Adjust if birthday hasn't occurred yet this year
-          if (monthDiff < 0 || (monthDiff === 0 && ref.getDate() < birth.getDate())) {
-            age--;
-          }
-          
-          // Return the age as a number
-          return age;
-        } catch (error) {
-          return "Invalid input";
-        }
-      }
-    );
-  }
-}
-
-
-//  STEP 2: CONFIGURE AGE PROPERTIES 
-
-
-AgePlugin.pluginName = 'AgePlugin';
-
-AgePlugin.implementedFunctions = {
-  AGE: {
-    method: 'age',
-    parameters: [
-      { argumentType: FunctionArgumentType.STRING },
-      { argumentType: FunctionArgumentType.STRING, optionalArg: true }
-    ],
-  }
-};
-
-AgePlugin.translations = {
-  enGB: {
-    AGE: 'AGE',
-  },
-};
-
-// STEP 3: MANUAL REGISTRATION (FOR VERSION 2.6.0) 
-
-
->>>>>>> 3abc85f096ffd6855799cf8bdc1037b518d3bbd9
 HyperFormula.registerFunctionPlugin(RatingPlugin, RatingPlugin.translations);
 HyperFormula.registerFunctionPlugin(FullNamePlugin, FullNamePlugin.translations);
 HyperFormula.registerFunctionPlugin(AgePlugin, AgePlugin.translations);
 
-<<<<<<< HEAD
 console.log("✅ All Plugins Registered Manually");
-=======
-console.log("✅ All Plugins Registered Manually for v2.6.0");
-
-
-//  STEP 4: BUILD ENGINE 
-
->>>>>>> 3abc85f096ffd6855799cf8bdc1037b518d3bbd9
 
 // BUILD ENGINE
 const hfInstance = HyperFormula.buildEmpty({
@@ -251,13 +147,8 @@ const hfInstance = HyperFormula.buildEmpty({
   language: 'enGB',
 });
 
-<<<<<<< HEAD
 // ====================================================================
 // 🖥️ MAIN COMPONENT
-=======
-console.log("✅ Engine Started with RATING, FULLNAME & AGE functions!");
-
->>>>>>> 3abc85f096ffd6855799cf8bdc1037b518d3bbd9
 // ====================================================================
 
 const Spreadsheet = () => {
@@ -396,11 +287,7 @@ const Spreadsheet = () => {
         </div>
         
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-<<<<<<< HEAD
           <span>Functions: <b>FULLNAME</b> | <b>RATING</b> | <b>AGE</b></span>
-=======
-          <span>Functions: <b>FULLNAME(first, last)</b> | <b>RATING(value, [max=5])</b> | <b>AGE(birthdate, [refdate])</b></span>
->>>>>>> 3abc85f096ffd6855799cf8bdc1037b518d3bbd9
         </div>
       </div>
     </div>
