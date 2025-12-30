@@ -47,7 +47,7 @@ class RatingPlugin extends FunctionPlugin {
         
         // Unicode star characters
         const starFull = '★';
-        const starHalf = '⭐'; // You can use '⯨' for half-star if you prefer
+        const starHalf = '⯨'; 
         const starEmpty = '☆';
         
         // Build star string
