@@ -14,15 +14,6 @@ This Single Page Application (SPA) is built using the following industry-standar
 
 ---
 
-## ✨ Key Features
-
-* **Spreadsheet Interface:** Fully functional grid with row/column headers, resizing, and selection.
-* **Formula Engine:** Supports standard arithmetic and referencing (e.g., `=A1+B1`).
-* **Formatting:** Ability to toggle **Bold** text for selected cells.
-* **Custom Functions:** Unique formulas developed specifically for this application.
-Here is the updated **README.md**. I have updated the **Installation** section to include the specific command and packages you listed, and I have expanded the **Custom Functions** section to include the detailed logic for `FULLNAME` (capitalization) and `RATING` (stars/custom limits), while also emphasizing that standard Excel functions are built-in.
-
-
 ## 🚀 Technologies & Packages
 
 This Single Page Application (SPA) is built using the following industry-standard libraries.
@@ -88,6 +79,20 @@ Converts numeric scores into a visual star rating string. It supports custom max
 | `=RATING(4.7)` | ★★★★★ | Rounds to nearest whole star |
 | `=RATING(7, 10)` | ★★★★★★★☆☆☆ | **Custom Max:** 7 out of 10 |
 
+#### ➤ `AGE` (Age Calculator)
+
+Calculates the exact age based on a birthdate. It can calculate age relative to today or relative to a specific past/future date.
+
+**Syntax:** `=AGE(birthdate, [reference_date])`
+
+| Input Formula | Output Result | Logic Applied |
+| --- | --- | --- |
+| `=AGE("2000-01-01")` | **24** (e.g.) | Calculates age from birth to **Today** |
+| `=AGE("1995-06-15", "2020-01-01")` | **24** | Calculates age at a specific past date |
+| `=AGE(A2)` | **(Dynamic)** | Supports referencing date cells |
+| `=AGE(A2, B2)` | **(Dynamic)** | Compare birthdate (A2) to reference (B2) |
+| `=AGE("invalid")` | **Invalid date** | Error handling for bad inputs |
+
 ---
 
 ## ⚙️ How to Run Locally
@@ -127,8 +132,9 @@ src/
 │   ├── FormulaBar.jsx   # Input bar for editing cell values
 │   └── Toolbar.jsx      # Formatting buttons (Bold, etc.)
 ├── plugins/             # Custom Formula Logic
-│   └── FullNamePlugin.js # Smart Capitalization Logic
-│   └── RatingPlugin.js   # Star Rating Logic
+│   ├── FullNamePlugin.js # Smart Capitalization Logic
+│   ├── RatingPlugin.js   # Star Rating Logic
+│   └── AgePlugin.js      # Age Calculation Logic
 ├── Spreadsheet.jsx      # Main Grid & Engine Configuration
 ├── App.jsx              # Root Component
 └── main.jsx             # Entry Point
@@ -138,5 +144,7 @@ src/
 ---
 
 **Developed by Srilakshmi Mounika Bandaru**
+
+```
 
 ```
